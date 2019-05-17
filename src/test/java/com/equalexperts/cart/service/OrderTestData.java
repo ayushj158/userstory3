@@ -1,7 +1,5 @@
 package com.equalexperts.cart.service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,12 +20,8 @@ public class OrderTestData {
 	public static OrderVO createMockOrder(final int noOfItems, final int perItemQuantity,
 			final Double unitPrice) {
 		OrderVO mockOrder = new OrderVO(3145);
-		mockOrder.setOrderItems(createMockOrderItems(1, perItemQuantity,unitPrice));
+		mockOrder.setOrderItems(createMockOrderItems(noOfItems, perItemQuantity,unitPrice));
 		return mockOrder;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(BigDecimal.valueOf(0.979).setScale(2, RoundingMode.HALF_DOWN));
-		System.out.println(BigDecimal.valueOf(.99).setScale(0, RoundingMode.HALF_UP));
-	}
 }

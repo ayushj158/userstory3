@@ -15,13 +15,13 @@ import com.equalexperts.cart.domain.OrderVO;
 public class EndToEndTest {
 
 	@Nested
-	@DisplayName("Given An empty Shopping Cart And a product, Dove Soap with a unit price of 39.99")
-	class AddItemTest {
-		AddToCartService cart;
+	@DisplayName("Given An empty Shopping Cart And a product, Dove Soap with a unit price of 39.99 And another product Axe Deo with a unit price of 99.99")
+	class addTest {
+		ShoppingCartService cart;
 
 		@BeforeEach
 		public void setup() {
-			cart = new AddToCartService(1234);
+			cart = new ShoppingCartService(1234);
 		}
 
 		@Test
@@ -31,22 +31,22 @@ public class EndToEndTest {
 				+ "_Then_Shopping cart should contain 2 Items"
 				+"And the total sales tax amount for the shopping cart should equal 35.00"
 				+ " And shopping cart’s total price should be 314.96")
-		public void test_addItem() {
+		public void test_add() {
 			final String productUPC = "Dove Soaps";
 			final Double unitPrice = 39.99;
 			final int  quantity= 2;
-			cart.addItem(productUPC, unitPrice, quantity);
-			cart.addItem("Axe Deo", 99.99,2);
+			cart.add(productUPC, unitPrice, quantity);
+			cart.add("Axe Deo", 99.99,2);
 			cart.getOrder().setTaxRate(12.5);
-			OrderVO result = cart.calculateOrder(cart.getOrder());
+			OrderVO result = cart.calculateOrder();
 			
 			assertEquals(2, cart.getOrder().getOrderItems().size());
 			assertEquals(2, cart.getOrder().getOrderItems().get(productUPC).getQuantity());
 			assertEquals(2, cart.getOrder().getOrderItems().get("Axe Deo").getQuantity());
 			assertEquals(unitPrice, cart.getOrder().getOrderItems().get(productUPC).getUnitPrice(),0.001);
-			assertEquals(new BigDecimal(279.96).setScale(2, RoundingMode.HALF_DOWN),result.getTotalPriceForItems());
-			assertEquals(new BigDecimal(35.00).setScale(2, RoundingMode.HALF_DOWN),result.getTotalTax());
-			assertEquals(new BigDecimal(314.96).setScale(2, RoundingMode.HALF_DOWN),result.getTotalPrice());
+			assertEquals(new BigDecimal(279.96).setScale(2, RoundingMode.HALF_UP),result.getTotalPriceForItems());
+			assertEquals(new BigDecimal(35.00).setScale(2, RoundingMode.HALF_UP),result.getTotalTax());
+			assertEquals(new BigDecimal(314.96).setScale(2, RoundingMode.HALF_UP),result.getTotalPrice());
 			
 		}
 	}

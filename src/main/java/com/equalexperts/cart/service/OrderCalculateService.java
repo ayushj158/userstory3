@@ -13,19 +13,19 @@ public class OrderCalculateService implements OrderCalculate {
 		order.setTotalPriceForItems(calculateOrderItems(order));
 		order.setTotalTax(calculateTax(order));
 		order.setTotalPrice(
-				order.getTotalPriceForItems().add(order.getTotalTax()).setScale(2, RoundingMode.HALF_DOWN));
+				order.getTotalPriceForItems().add(order.getTotalTax()).setScale(2, RoundingMode.HALF_UP));
 		return order;
 	}
 
 	private BigDecimal calculateTax(OrderVO order) {
 		return (order.getTotalPriceForItems().multiply(BigDecimal.valueOf(order.getTaxRate()/100))).setScale(2,
-				RoundingMode.HALF_DOWN);
+				RoundingMode.HALF_UP);
 	}
 
 	private BigDecimal calculateOrderItems(OrderVO order) {
 		final Double orderLinesTotal = order.getOrderItems().entrySet().stream().map(i -> i)
 				.collect(Collectors.summingDouble(i -> calculateOrderItem(i.getValue())));
-		return BigDecimal.valueOf(orderLinesTotal).setScale(2, RoundingMode.HALF_DOWN);
+		return BigDecimal.valueOf(orderLinesTotal).setScale(2, RoundingMode.HALF_UP);
 	}
 
 	private Double calculateOrderItem(ItemVO orderItem) {
