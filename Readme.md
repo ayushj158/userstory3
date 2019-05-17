@@ -27,12 +27,14 @@ This will build your project and run all test cases
 
   Unit Tests are available for every business logic in the porject. 
 
+
 ```
 For example : ShoppingCartServiceTest tests ShoppingCartService class
 ```
 ### End to End Tests
  EndToEndTests class test end to end user scenarios . For Example
 
+```
 Given:
 An empty shopping cart
 And a product, Dove Soap with a unit price of 39.99
